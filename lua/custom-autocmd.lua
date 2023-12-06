@@ -84,8 +84,17 @@ api.nvim_create_autocmd("VimResized", {
   command = "wincmd =",
 })
 
+
+local skeleton_group = api.nvim_create_augroup("skeleton", { clear = true })
+
 api.nvim_create_autocmd("BufNewFile", {
   pattern = "*.cpp",
-  group = api.nvim_create_augroup("skeleton", { clear = true }),
+  group = skeleton_group,
   command = '0r $NVIM/skeleton/skeleton.cpp'
+})
+
+api.nvim_create_autocmd("BufNewFile", {
+  pattern = "*.py",
+  group = skeleton_group,
+  command = '0r $NVIM/skeleton/skeleton.py'
 })
