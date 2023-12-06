@@ -16,13 +16,18 @@ keymap.set("n", "<leader>p", "m`o<ESC>p``", { desc = "paste below current line" 
 keymap.set("n", "<leader>P", "m`O<ESC>p``", { desc = "paste above current line" })
 
 -- Shortcut for faster save and quit
-keymap.set("n", "<leader>w", "<cmd>update<cr>", { silent = true, desc = "save buffer" })
+keymap.set("n", "<C-s>", ":w<CR>", { silent = true, noremap = true, desc = "save buffer" })
+keymap.set("i", "<C-s>", "<Esc>:w<CR>", { silent = true, noremap = true, desc = "save buffer" })
+
+-- Shortcut for undo
+keymap.set("i", "<C-z>", "<Esc>:u<CR>", {silent = true, noremap = true, desc = "Undo"})
+keymap.set("n", "<C-z>", ":u<CR>", {silent = true, noremap = true, desc = "Undo"})
 
 -- Saves the file if modified and quit
 keymap.set("n", "<leader>q", "<cmd>x<cr>", { silent = true, desc = "quit current window" })
 
 -- Quit all opened buffers
-keymap.set("n", "<leader>Q", "<cmd>qa!<cr>", { silent = true, desc = "quit nvim" })
+keymap.set("n", ",", "<cmd>qa!<cr>", { silent = true, desc = "quit nvim" })
 
 -- Navigation in the location and quickfix list
 keymap.set("n", "[l", "<cmd>lprevious<cr>zv", { silent = true, desc = "previous location item" })

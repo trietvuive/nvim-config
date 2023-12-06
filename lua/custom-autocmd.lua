@@ -83,3 +83,9 @@ api.nvim_create_autocmd("VimResized", {
   desc = "autoresize windows on resizing operation",
   command = "wincmd =",
 })
+
+api.nvim_create_autocmd("BufNewFile", {
+  pattern = "*.cpp",
+  group = api.nvim_create_augroup("skeleton", { clear = true }),
+  command = '0r $NVIM/skeleton/skeleton.cpp'
+})

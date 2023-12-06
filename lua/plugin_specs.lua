@@ -488,6 +488,10 @@ local plugin_specs = {
       require("config.fidget-nvim")
     end,
   },
+  {
+    'windwp/nvim-autopairs',
+    event = "InsertEnter",
+  },
 }
 
 -- configuration for lazy itself.

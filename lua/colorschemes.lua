@@ -19,6 +19,7 @@ M.colorscheme2dir = {
   onedarkpro = "onedarkpro.nvim",
   monokai = "monokai.nvim",
   material = "material.nvim",
+  koehler = "koehler.nvim"
 }
 
 M.gruvbox8 = function()
@@ -107,6 +108,10 @@ M.material = function ()
   vim.cmd('colorscheme material')
 end
 
+M.koehler = function()
+  vim.cmd([[colorscheme koehler]])
+end
+
 --- Use a random colorscheme from the pre-defined list of colorschemes.
 M.rand_colorscheme = function()
   local colorscheme = utils.rand_element(vim.tbl_keys(M.colorscheme2dir))
@@ -128,5 +133,5 @@ M.rand_colorscheme = function()
   end
 end
 
--- Load a random colorscheme
-M.rand_colorscheme()
+-- Load catpuccin
+M.monokai()
