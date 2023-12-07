@@ -176,12 +176,3 @@ set diffopt+=linematch:60
 
 set nowrap  " do no wrap
 set noruler
-
-" autoclose
-inoremap " ""<left>
-inoremap ' ''<left>
-inoremap ( ()<left>
-inoremap [ []<left>
-inoremap { {}<left>
-inoremap {<CR> {<CR>}<ESC>O
-inoremap {;<CR> {<CR>};<ESC>O

@@ -1,2 +1,3 @@
 import sys
-S = lambda map(int, sys.stdin.readline().split())
+input = sys.stdin.readline
+S = lambda map(int, input().split())
