@@ -491,6 +491,7 @@ local plugin_specs = {
   {
     'windwp/nvim-autopairs',
     event = "InsertEnter",
+    opts = {},
   },
 }
 
