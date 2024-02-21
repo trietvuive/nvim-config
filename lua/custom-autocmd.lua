@@ -84,17 +84,23 @@ api.nvim_create_autocmd("VimResized", {
   command = "wincmd =",
 })
 
-
+-- autogenerate skeleton for python and cpp
 local skeleton_group = api.nvim_create_augroup("skeleton", { clear = true })
 
 api.nvim_create_autocmd("BufNewFile", {
   pattern = "*.cpp",
   group = skeleton_group,
-  command = '0r $NVIM/skeleton/skeleton.cpp'
+  command = "0r $NVIM/skeleton/skeleton.cpp"
 })
 
 api.nvim_create_autocmd("BufNewFile", {
   pattern = "*.py",
   group = skeleton_group,
-  command = '0r $NVIM/skeleton/skeleton.py'
+  command = "0r $NVIM/skeleton/skeleton.py"
+})
+
+api.nvim_create_autocmd("BufNewFile", {
+  pattern = "*.java",
+  group = skeleton_group,
+  command = "0r $NVIM/skeleton/skeleton.java"
 })

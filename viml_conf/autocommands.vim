@@ -119,5 +119,15 @@ augroup LargeFile
   autocmd BufReadPre * call s:handle_large_file()
 augroup END
 
+" autocompile
+augroup compile
+    autocmd!
+    autocmd filetype java map <silent> <F5> :w <bar> :!javac % <CR> :exec ':term java '.shellescape('%:r') <CR>
+    autocmd filetype tex map <F5> :w <bar> :VimtexCompile <CR>
+    autocmd filetype cpp map <F5> :w <bar> :!del out.exe && g++ -std=c++2a -O2 -Wall -fno-sanitize-recover -o out % && out.exe <CR>
+    autocmd filetype python map <F5> :w <bar> :!python3 % <CR>
+								
+augroup end
+
 " Load auto-command defined in Lua
 lua require("custom-autocmd")

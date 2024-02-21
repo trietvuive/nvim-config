@@ -493,6 +493,20 @@ local plugin_specs = {
     event = "InsertEnter",
     opts = {},
   },
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({})
+    end,
+  },
+  {
+    "zbirenbaum/copilot-cmp",
+    config = function ()
+      require("copilot_cmp").setup()
+    end
+  }
 }
 
 -- configuration for lazy itself.
