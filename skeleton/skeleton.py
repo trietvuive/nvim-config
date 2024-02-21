@@ -1,3 +1,11 @@
+import os
 import sys
-input = sys.stdin.readline
-S = lambda map(int, input().split())
+
+def ri(): return int(input())
+
+def solve():
+    return 0
+
+tc = ri()
+for _ in range(tc):
+    solve()
