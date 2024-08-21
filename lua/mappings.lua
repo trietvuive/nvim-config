@@ -1,6 +1,5 @@
 local keymap = vim.keymap
-local api = vim.api
-local uv = vim.loop
+local uv = vim.uv
 
 -- Save key strokes (now we do not need to press shift to enter command mode).
 keymap.set({ "n", "x" }, ";", ":")
@@ -51,7 +50,21 @@ keymap.set("n", [[\x]], "<cmd>windo lclose <bar> cclose <cr>", {
 -- Delete a buffer, without closing the window, see https://stackoverflow.com/q/4465095/6064933
 keymap.set("n", [[\d]], "<cmd>bprevious <bar> bdelete #<cr>", {
   silent = true,
-  desc = "delete buffer",
+  desc = "delete current buffer",
+})
+
+keymap.set("n", [[\D]], function()
+  local buf_ids = vim.api.nvim_list_bufs()
+  local cur_buf = vim.api.nvim_win_get_buf(0)
+
+  for _, buf_id in pairs(buf_ids) do
+    -- do not Delete unlisted buffers, which may lead to unexpected errors
+    if vim.api.nvim_get_option_value("buflisted", { buf = buf_id }) and buf_id ~= cur_buf then
+      vim.api.nvim_buf_delete(buf_id, { force = true })
+    end
+  end
+end, {
+  desc = "delete other buffers",
 })
 
 -- Insert a blank line below or above current line (do not move the cursor),
@@ -175,7 +188,7 @@ keymap.set("n", "<Down>", "<C-W>j")
 keymap.set({ "x", "o" }, "iu", "<cmd>call text_obj#URL()<cr>", { desc = "URL text object" })
 
 -- Text objects for entire buffer
-keymap.set({ "x", "o" }, "iB", "<cmd>call text_obj#Buffer()<cr>", { desc = "buffer text object" })
+keymap.set({ "x", "o" }, "iB", ":<C-U>call text_obj#Buffer()<cr>", { desc = "buffer text object" })
 
 -- Do not move my cursor when joining lines.
 keymap.set("n", "J", function()
@@ -184,17 +197,17 @@ keymap.set("n", "J", function()
       delmarks z
     ]])
 end, {
-  desc = "join line",
+  desc = "join lines without moving cursor",
 })
 
 keymap.set("n", "gJ", function()
   -- we must use `normal!`, otherwise it will trigger recursive mapping
   vim.cmd([[
-      normal! zmgJ`z
+      normal! mzgJ`z
       delmarks z
     ]])
 end, {
-  desc = "join visual lines",
+  desc = "join lines without moving cursor",
 })
 
 -- Break inserted text into smaller undo units when we insert some punctuation chars.
@@ -220,17 +233,24 @@ keymap.set("n", "<leader>cb", function()
   local cnt = 0
   local blink_times = 7
   local timer = uv.new_timer()
+  if timer == nil then
+    return
+  end
 
-  timer:start(0, 100, vim.schedule_wrap(function()
-    vim.cmd[[
+  timer:start(
+    0,
+    100,
+    vim.schedule_wrap(function()
+      vim.cmd([[
       set cursorcolumn!
       set cursorline!
-    ]]
+    ]])
 
-    if cnt == blink_times then
-      timer:close()
-    end
+      if cnt == blink_times then
+        timer:close()
+      end
 
-    cnt = cnt + 1
-  end))
-end)
+      cnt = cnt + 1
+    end)
+  )
+end, { desc = "show cursor" })
