@@ -86,15 +86,6 @@ local plugin_specs = {
     ft = { "lisp" },
   },
 
-  -- Super fast buffer jump
-  {
-    "smoka7/hop.nvim",
-    event = "VeryLazy",
-    config = function()
-      require("config.nvim_hop")
-    end,
-  },
-
   -- Show match number and index for searching
   {
     "kevinhwang91/nvim-hlslens",
@@ -354,12 +345,7 @@ local plugin_specs = {
 
   {
     "rhysd/vim-grammarous",
-    enabled = function()
-      if vim.g.is_mac then
-        return true
-      end
-      return false
-    end,
+    enabled = true,
     ft = { "markdown" },
   },
 
